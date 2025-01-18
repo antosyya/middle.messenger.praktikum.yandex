@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("app");
 
   const path = window.location.pathname;
-  if (path.includes("auth")) {
+  if (path.includes("")) {
     const nFn = Handlebars.compile(Auth);
     if (root) {
       root.innerHTML = nFn({});
