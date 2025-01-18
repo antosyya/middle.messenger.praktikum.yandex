@@ -1,14 +1,17 @@
 <main>
     <h1>Вход</h1>
-    <from class="form" id="register-form">
+    <from class="first_name" id="register-form">
         <label for="name">Имя</label>
-        {{> Input id="name" type="text" name="name" placeholder="имя"}}    
+        {{> Input id="name" type="text" name="first_name" placeholder="имя"}}    
      
-        <label for="lastname">Фамилия</label>
-        {{> Input id="lastname" type="text" name="lastname" placeholder="фамилия"}}    
+        <label for="second_name">Фамилия</label>
+        {{> Input id="lastname" type="text" name="second_name" placeholder="фамилия"}}    
       
-        <label for="login-register">Логин</label>  
-        {{> Input id="login-register" type="text" name="login-register" placeholder="логин"}}
+        <label for="login">Логин</label>  
+        {{> Input id="login-register" type="text" name="login" placeholder="логин"}}
+
+         <label for="email">E-mail</label>  
+        {{> Input id="email" type="text" name="email" placeholder="email"}}
 
         <label for="phone">Телефон</label>
         {{> Input id="phone" type="tel" name="phone" placeholder="телефон"}}    
