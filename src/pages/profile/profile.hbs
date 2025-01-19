@@ -4,6 +4,8 @@
     <h1>Профиль</h1>
  
     <from class="form" id="register-form">
+        <div class="avatar-wrap"></div>
+        {{> Input id="avatar" class="avatar" type="file" name="avatar" placeholder="фото"}} 
         <label for="first_name">Имя</label>
         {{> Input id="name" type="text" name="first_name" placeholder="имя"}}    
      
