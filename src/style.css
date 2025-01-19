@@ -1,11 +1,48 @@
+@import '../variables.css';
+
 body {
   font-family: 'Arial', sans-serif;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   height: 100vh;
   margin: 0;
   font-size: 16px;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  width: 100%;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  margin: 0;
+  /* width: 40%; */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a {
+  text-decoration: none;
+}
+
+li {
+  list-style-type: none;
 }
 
 .form {
@@ -17,12 +54,12 @@ body {
 .input {
   border-radius: 12px;
   padding: 10px 20px;
-  border: 1px solid #141F33;
+  border: 1px solid var(--border-color);
 }
 
 .button {
-  background: #00C78B;
-  color: #FFFFFF;
+  background: var(--primary-color);
+  color: var(--background-color);
   padding: 10px 20px;
   border-radius: 12px;
   margin-top: 20px;
@@ -32,6 +69,10 @@ body {
 
 input:focus {
   outline: none;
+}
+
+container {
+  height: 100%;
 }
 
 .big-text {

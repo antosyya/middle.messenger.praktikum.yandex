@@ -1,7 +1,8 @@
 <div class="container">
 {{> Header }}
 <main class="main">
-    <h1>Вход</h1>
+    <h1>Профиль</h1>
+ 
     <from class="form" id="register-form">
         <label for="first_name">Имя</label>
         {{> Input id="name" type="text" name="first_name" placeholder="имя"}}    
@@ -18,12 +19,14 @@
         <label for="phone">Телефон</label>
         {{> Input id="phone" type="tel" name="phone" placeholder="телефон"}}    
 
-        <label for="password">Пароль</label>
-        {{> Input id="password" type="password" name="password" placeholder="пароль"}}    
-     
-        <label for="password-two">Повторите пароль</label>
-        {{> Input id="password-two" type="password" name="password" placeholder="пароль"}}    
-        <button class="button" type="submit">Зарегистироваться</button>
+        <label for="oldPassword">Старый пароль</label>
+        {{> Input id="password" type="password" name="oldPassword" placeholder="пароль"}}  
+
+          <label for="newPassword">Новый пароль</label>
+        {{> Input id="password" type="password" name="newPassword" placeholder="пароль"}}   
+
+        <button class="button" type="submit">Изменить</button>
+        <button class="button" type="submit">Выйти</button>
     </from>
 </main>
 </div>
