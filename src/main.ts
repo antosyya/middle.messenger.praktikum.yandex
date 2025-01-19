@@ -4,9 +4,11 @@ import "./style.css";
 import { ErrorPage } from "./pages/error";
 import { NotFound } from "./pages/not-found";
 import { Register } from "./pages/register";
+import { Profile } from "./pages/profile";
 import Input from "./components/Input";
-
+import Header from "./components/Header";
 Handlebars.registerPartial("Input", Input);
+Handlebars.registerPartial("Header", Header);
 document.addEventListener("DOMContentLoaded", () => {
   const root = document.getElementById("app");
 
@@ -19,6 +21,12 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   if (path.includes("register")) {
     const nFn = Handlebars.compile(Register);
+    if (root) {
+      root.innerHTML = nFn({});
+    }
+  }
+  if (path.includes("profile")) {
+    const nFn = Handlebars.compile(Profile);
     if (root) {
       root.innerHTML = nFn({});
     }
