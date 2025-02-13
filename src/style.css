@@ -13,12 +13,12 @@
 }
 
 body {
-  font-family: Arial, sans-serif;
   display: flex;
-  justify-content: center;
-  height: 100vh;
-  margin: 0;
+  font-family: Arial, sans-serif;
   font-size: 16px;
+  height: 100vh;
+  justify-content: center;
+  margin: 0;
 }
 
 #avatar {
@@ -26,23 +26,23 @@ body {
 }
 
 .avatar-wrap {
+  background-color: var(--border-color);
   border: 1px solid var(--border-color);
   border-radius: 100px;
-  width: 80px;
   height: 80px;
   margin-left: auto;
   margin-right: auto;
-  background-color: var(--border-color);
   opacity: 0.4;
+  width: 80px;
 }
 
 .avatar-wrap-chat {
-  width: 40px;
-  height: 40px;
-  margin: 0;
-  display: flex;
   align-items: center;
+  display: flex;
+  height: 40px;
   justify-content: center;
+  margin: 0;
+  width: 40px;
 }
 
 header {
@@ -69,14 +69,14 @@ header {
 }
 
 .main {
+  align-items: center;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   margin: 0;
-  margin-top: 90px;
   margin-left: auto;
   margin-right: auto;
+  margin-top: 90px;
 }
 
 a {
@@ -94,19 +94,19 @@ li {
 }
 
 input {
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 10px 20px;
-  border: 1px solid var(--border-color);
 }
 
 .button {
   background: var(--primary-color);
-  color: var(--background-color);
-  padding: 10px 20px;
-  border-radius: 12px;
-  margin-top: 20px;
   border: none;
+  border-radius: 12px;
+  color: var(--background-color);
   margin-bottom: 6px;
+  margin-top: 20px;
+  padding: 10px 20px;
 }
 
 input:focus {
@@ -121,31 +121,31 @@ input:focus {
 }
 
 .chat {
-  width: 1400px;
-  height: 900px;
   background: var(--background-color);
-  display: flex;
   border-radius: 10px;
   box-shadow: 0 4px 8px var(--text-color) 20%;
+  display: flex;
+  height: 900px;
   overflow: hidden;
+  width: 1400px;
 }
 
 .chat-list {
-  width: 30%;
   background: var(--grey-color);
-  padding: 10px;
-  overflow-y: auto;
   border-right: 1px solid var(--box-color);
+  overflow-y: auto;
+  padding: 10px;
+  width: 30%;
 }
 
 .chat-list-item {
-  padding: 10px;
+  align-items: center;
   border-bottom: 1px solid var(--box-color);
   cursor: pointer;
   display: flex;
   flex-direction: row;
   gap: 10px;
-  align-items: center;
+  padding: 10px;
 }
 
 .chat-list-item:hover {
@@ -153,9 +153,9 @@ input:focus {
 }
 
 .chat-container {
-  width: 70%;
   display: flex;
   flex-direction: column;
+  width: 70%;
 }
 
 .chat-header {
@@ -166,18 +166,18 @@ input:focus {
 }
 
 .chat-messages {
-  flex: 1;
-  padding: 10px;
-  overflow-y: auto;
   display: flex;
+  flex: 1;
   flex-direction: column;
+  overflow-y: auto;
+  padding: 10px;
 }
 
 .message {
-  max-width: 70%;
-  margin-bottom: 10px;
-  padding: 8px 12px;
   border-radius: 10px;
+  margin-bottom: 10px;
+  max-width: 70%;
+  padding: 8px 12px;
 }
 
 .sent {
@@ -191,29 +191,29 @@ input:focus {
 }
 
 .chat-input {
-  display: flex;
-  padding: 10px;
-  gap: 10px;
   background: var(--background-color);
+  display: flex;
+  gap: 10px;
+  padding: 10px;
 }
 
 .chat-input input {
-  flex: 1;
-  padding: 10px;
   border: none;
   border-radius: 5px;
+  flex: 1;
+  padding: 10px;
 }
 
 .btn-out {
   background: var(--primary-color);
-  color: var(--background-color);
-  padding: 10px 20px;
-  border-radius: 12px;
-  margin-top: 20px;
   border: none;
+  border-radius: 12px;
+  color: var(--background-color);
   margin-bottom: 6px;
-  text-decoration: none;
+  margin-top: 20px;
+  padding: 10px 20px;
   text-align: center;
+  text-decoration: none;
 }
 
 .error {

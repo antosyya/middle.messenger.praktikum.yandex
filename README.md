@@ -29,6 +29,10 @@
 
 запуск проекта в режиме разработки `npm run dev`
 
+проверка css - npm run lint:css
+
+исправление ошибки форматирования CSS -npm run format:css
+
 ## публикация
 
 домен в Netlify https://sparkly-cajeta-1a1c57.netlify.app/
