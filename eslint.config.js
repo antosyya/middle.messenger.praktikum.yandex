@@ -1,15 +1,19 @@
 import js from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
+import tsp from "@typescript-eslint/parser";
 
 export default [
   js.configs.recommended,
-  { ignores: ["node_modules/", "dist/", "build/", "**/*.min.js"] },
   {
+    files: ["**/*.{js,ts,cjs}"],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
+      parser: tsp,
+      globals: {
+        window: "readonly",
+        document: "readonly",
+        process: "readonly",
+      },
     },
-    files: ["**/*.{js,mjs,cjs,ts}"],
     plugins: {
       "@typescript-eslint": tseslint,
     },
