@@ -1,10 +1,9 @@
-@import '../variables.css';
+@import 'url(../variables.css)';
 
 body {
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
   display: flex;
   justify-content: center;
-  /* align-items: center; */
   height: 100vh;
   margin: 0;
   font-size: 16px;
@@ -28,7 +27,7 @@ body {
 .avatar-wrap-chat {
   width: 40px;
   height: 40px;
-  margin: 0px;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -102,10 +101,6 @@ input:focus {
   outline: none;
 }
 
-container {
-  height: 100%;
-}
-
 .big-text {
   font-size: 56px;
   font-weight: 700;
@@ -116,24 +111,24 @@ container {
 .chat {
   width: 1400px;
   height: 900px;
-  background: #fff;
+  background: var(--background-color);
   display: flex;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px var(--text-color) 20%;
   overflow: hidden;
 }
 
 .chat-list {
   width: 30%;
-  background: #ededed;
+  background: var(--grey-color);
   padding: 10px;
   overflow-y: auto;
-  border-right: 1px solid #ccc;
+  border-right: 1px solid var(--box-color);
 }
 
 .chat-list-item {
   padding: 10px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--box-color);
   cursor: pointer;
   display: flex;
   flex-direction: row;
@@ -142,7 +137,7 @@ container {
 }
 
 .chat-list-item:hover {
-  background: #dcdcdc;
+  background: var(--grey-color-lt);
 }
 
 .chat-container {
@@ -153,7 +148,7 @@ container {
 
 .chat-header {
   background: var(--primary-color);
-  color: white;
+  color: var(--background-color);
   padding: 15px;
   text-align: center;
 }
@@ -175,19 +170,19 @@ container {
 
 .sent {
   align-self: flex-end;
-  background: #dcf8c6;
+  background: var(--green-white);
 }
 
 .received {
   align-self: flex-start;
-  background: #e0e0e0;
+  background: var(--red-white);
 }
 
 .chat-input {
   display: flex;
   padding: 10px;
   gap: 10px;
-  background: #f0f0f0;
+  background: var(--background-color);
 }
 
 .chat-input input {

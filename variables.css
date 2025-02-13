@@ -2,7 +2,12 @@
     --primary-color: #00C78B;
     --secondary-color: #6c757d;
     --border-color: #6c757d;
-    --background-color: #FFFFFF;
-    --text-color: #000000;
-    --text-red: #FF0000
+    --grey-color: #ededed;
+    --grey-color-lt: #dcdcdc;
+    --background-color: #FFF;
+    --box-color: #CCC;
+    --text-color: #000;
+    --text-red: #FF0;
+    --green-white: #dcf8c6;
+    --red-white: #e0e0e0;
 }
