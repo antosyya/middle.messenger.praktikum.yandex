@@ -4,7 +4,6 @@ import { Input } from "../../components/Input";
 import Block from "../../services/Block";
 import { getForm, validateInput } from "../../services/validateForm";
 
-// export { default as Profile } from "./profile.hbs?raw";
 export class Register extends Block {
   constructor() {
     super({

@@ -197,16 +197,6 @@ container {
   border-radius: 5px;
 }
 
-/* 
-.chat-input button {
-  margin-left: 10px;
-  padding: 10px;
-  border: none;
-  background: #075e54;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-} */
 .btn-out {
   background: var(--primary-color);
   color: var(--background-color);
