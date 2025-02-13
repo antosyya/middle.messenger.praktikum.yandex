@@ -12,7 +12,9 @@
     "format:css": "stylelint src/**/*.css --fix"
   },
   "devDependencies": {
-    "eslint": "^9.20.0",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
+    "eslint": "^9.20.1",
     "globals": "^15.14.0",
     "stylelint": "^16.14.1",
     "stylelint-config-standard": "^37.0.0",
