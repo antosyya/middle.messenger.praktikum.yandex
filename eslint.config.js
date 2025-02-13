@@ -1,24 +1,24 @@
 import js from "@eslint/js";
-import tseslint from "@typescript-eslint/eslint-plugin";
-import tsp from "@typescript-eslint/parser";
+import globals from "globals";
+import tsEslint from "typescript-eslint";
+import prettierRecommended from "eslint-plugin-prettier/recommended";
+import prettierConfig from "./prettier.config.js";
 
-export default [
-  js.configs.recommended,
+export default tsEslint.config(
+  { ignores: ["dist", "node_modules"] },
   {
-    files: ["**/*.{js,ts,cjs}"],
+    extends: [js.configs.recommended, ...tsEslint.configs.recommended],
+    files: ["**/*.{js,ts}"],
     languageOptions: {
-      parser: tsp,
-      globals: {
-        window: "readonly",
-        document: "readonly",
-        process: "readonly",
-      },
-    },
-    plugins: {
-      "@typescript-eslint": tseslint,
-    },
-    rules: {
-      "@typescript-eslint/ban-ts-comment": "warn",
+      ecmaVersion: 2020,
+      globals: globals.browser,
     },
   },
-];
+  prettierRecommended,
+  {
+    rules: {
+      "no-console": "warn",
+      "prettier/prettier": ["warn", prettierConfig],
+    },
+  }
+);
