@@ -1,6 +1,5 @@
 import EventBus from "../services/EventBus";
 import set from "../services/set";
-import { Indexed } from "../services/types";
 import { AppStore } from "../types/AppStore";
 
 export enum StoreEvents {

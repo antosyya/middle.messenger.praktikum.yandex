@@ -1,4 +1,4 @@
-import { router, Router } from "./services/Router.ts";
+import { router } from "./services/Router.ts";
 import { routes } from "./services/routersList.ts";
 import { IRoute } from "./services/types.ts";
 import authController from "./store/AuthController.ts";
