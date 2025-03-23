@@ -17,7 +17,7 @@ class Store extends EventBus {
     set(this.state, path, value);
 
     // метод EventBus
-    this.emit(StoreEvents.Updated);
+    this.emit(StoreEvents.Updated, this.getState());
   }
   public getState(): Partial<AppStore> {
     return this.state;

@@ -4,7 +4,7 @@ import Block from "../../services/Block";
 import { getForm, validateInput } from "../../services/validateForm";
 import store, { StoreEvents } from "../../store/store";
 import authController from "../../store/AuthController";
-import { connect } from "../../services/connecct";
+import { connect } from "../../services/connect";
 import { isEqual } from "../../services/isEqual";
 import userController from "../../store/UserController";
 import { IProfile, UserPassword } from "../../types/User";
@@ -19,21 +19,18 @@ class ProfilePage extends Block {
       this.setProps(store.getState());
     }),
       super({
-        InputAvatar: new Input({
-          type: "file",
-          id: "avatar",
-          name: "avatar",
-          placeholder: "фото",
-          className: "avatar",
-          change: (event: Event) => {
-            if (
-              event.target instanceof HTMLInputElement &&
-              event.target.files
-            ) {
-              userController.changeAvatar(event.target.files[0]);
-            }
-          },
-        }),
+        // InputAvatar: new Input({
+        //   type: "file",
+        //   id: "avatar",
+        //   name: "avatar",
+        //   placeholder: "фото",
+        //   className: "avatar",
+        //   change: async (event: Event) => {
+        //     if (event.target instanceof HTMLInputElement && event.target.files) {
+        //       userController.changeAvatar(event.target.files[0]);
+        //     }
+        //   },
+        // }),
         OutButton: new Button({
           text: "Выйти",
           onClick: () => {
@@ -48,18 +45,69 @@ class ProfilePage extends Block {
         }),
       });
   }
+  protected override componentDidMount(): void {
+    store.getState().user;
+  }
   override componentDidUpdate(
     oldProps: Record<string, any> | null | undefined,
     newProps: Record<string, any> | null | undefined
   ): boolean {
-    const isChangeData =
-      !!newProps?.user && !isEqual(oldProps?.user, newProps?.user);
-    const userData =
-      typeof newProps?.user === "string" ? newProps?.user : newProps?.user;
+    console.log("componentDidUpdate called");
+    console.log("oldProps:", oldProps);
+    console.log("newProps:", newProps);
+    const oldUser = oldProps?.user;
+    const newUser = newProps?.user;
+    console.log("oldProps:", oldUser?.avatar);
+    console.log("newProps:", newUser?.avatar);
+    const isChangeData = !!newProps?.user && !isEqual(oldUser, newUser);
+
+    const userData = typeof newUser === "string" ? newUser : newUser;
+
+    const isChangeAvatar =
+      !!newProps?.user?.avatar &&
+      oldProps?.user?.avatar !== newProps?.user?.avatar;
+
+    // if (isChangeData || isChangeAvatar) {
+    //   this.setChildren({
+    //     Avatar: new Avatar({
+    //       avatar: newProps?.user?.avatar
+    //         ? `https://ya-praktikum.tech/api/v2/resources${newProps.user.avatar}`
+    //         : "/img/user.svg",
+    //     }),
+    //   });
+    // }
+
     if (isChangeData) {
       this.setChildren({
+        InputAvatar: new Input({
+          type: "file",
+          id: "avatar",
+          name: "avatar",
+          placeholder: "фото",
+          className: "avatar",
+          value: userData?.avatar
+            ? `https://ya-praktikum.tech/api/v2/resources${userData.avatar}`
+            : "/img/user.svg",
+          change: async (event: Event) => {
+            if (
+              event.target instanceof HTMLInputElement &&
+              event.target.files
+            ) {
+              const response = await userController.changeAvatar(
+                event.target.files[0]
+              );
+              store.set("user", {
+                ...store.getState().user,
+                avatar: response.avatar,
+              });
+              this.setProps({
+                user: { ...store.getState().user },
+              });
+            }
+          },
+        }),
         Avatar: new Avatar({
-          avatar: userData.avatar
+          avatar: newProps?.user?.avatar
             ? `https://ya-praktikum.tech/api/v2/resources${userData.avatar}`
             : "/img/user.svg",
         }),
@@ -156,7 +204,7 @@ class ProfilePage extends Block {
         }),
       });
     }
-    return !isChangeData;
+    return true;
   }
   protected render(): string {
     return `<div class="container">
