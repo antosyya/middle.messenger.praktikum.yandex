@@ -158,9 +158,9 @@ input:focus {
 }
 
 .chat-list-item-text {
+  align-items: center;
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 
 .chat-list-item:hover {
@@ -216,8 +216,8 @@ input:focus {
 .chat-input {
   background: var(--background-color);
   display: flex;
-  gap: 10px;
   flex-direction: column;
+  gap: 10px;
   padding: 10px;
   width: 80%;
 }
@@ -258,14 +258,14 @@ input:focus {
   border-radius: 100px;
   color: var(--secondary-color);
   font-size: 26px;
-  padding: 5px 10px;
   height: 40px;
+  padding: 5px 10px;
 }
 
 .row-chat {
+  align-items: center;
   display: flex;
   flex-direction: row;
-  align-items: center;
   justify-content: space-between;
   padding-left: 10px;
   padding-right: 10px;
