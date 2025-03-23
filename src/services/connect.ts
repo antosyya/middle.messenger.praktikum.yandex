@@ -17,7 +17,6 @@ export function connect<T extends object>(
         store.on(StoreEvents.Updated, () => {
           // при обновлении получаем новое состояние
           const newState = mapStateToProps(store.getState());
-
           // если что-то из используемых данных поменялось, обновляем компонент
           if (!isEqual(state, newState)) {
             this.setProps({ ...newState });
