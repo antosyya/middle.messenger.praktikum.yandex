@@ -36,7 +36,7 @@ class AuthController {
       const responce = await authApi.getUser();
       if (responce.status === 200) {
         const user = JSON.parse(responce.response);
-        store.set("user", { ...user, avatar: user?.avatar });
+        store.set("user", user);
         const isAuthPage = ["/", "/sign-up"].includes(location.pathname);
         if (isAuthPage) {
           router.go(ROUTES.CHATS);
