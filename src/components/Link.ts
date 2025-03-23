@@ -3,19 +3,17 @@ import Block from "../services/Block";
 interface Props {
   text: string;
   onClick?: (event: Event) => void;
-  className?: string;
 }
-export class Button extends Block {
-  constructor({ className = "button", ...props }: Props) {
+export class Link extends Block {
+  constructor(props: Props) {
     super({
       ...props,
-      className,
       events: {
         click: props.onClick,
       },
     });
   }
   override render() {
-    return `<button class={{className}} type="submit">{{text}}</button>`;
+    return `<span class="link" >{{text}}</span>`;
   }
 }

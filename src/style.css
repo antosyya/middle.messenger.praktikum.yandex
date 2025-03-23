@@ -10,6 +10,7 @@
   --text-red: #FF0;
   --green-white: #dcf8c6;
   --red-white: #e0e0e0;
+  --blue: #0000EE;
 }
 
 body {
@@ -32,8 +33,14 @@ body {
   height: 80px;
   margin-left: auto;
   margin-right: auto;
-  opacity: 0.4;
   width: 80px;
+  overflow: hidden;
+
+  img {
+    width: 80px;
+    height: 80px;
+    z-index: 1;
+  }
 }
 
 .avatar-wrap-chat {
@@ -43,6 +50,7 @@ body {
   justify-content: center;
   margin: 0;
   width: 40px;
+  margin-right: 10px;
 }
 
 header {
@@ -144,8 +152,15 @@ input:focus {
   cursor: pointer;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   gap: 10px;
   padding: 10px;
+}
+
+.chat-list-item-text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 .chat-list-item:hover {
@@ -190,11 +205,21 @@ input:focus {
   background: var(--red-white);
 }
 
+.chat-input-wrap {
+  background: var(--background-color);
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
 .chat-input {
   background: var(--background-color);
   display: flex;
   gap: 10px;
   padding: 10px;
+  flex-direction: column;
+  width: 80%;
 }
 
 .chat-input input {
@@ -220,4 +245,59 @@ input:focus {
   color: var(--text-red);
   font-size: 8px;
   width: 190px;
+}
+
+.link {
+  color: var(--blue);
+  cursor: pointer;
+}
+
+.btn-plus {
+  background: transparent;
+  border: 2px solid var(--secondary-color);
+  border-radius: 100px;
+  color: var(--secondary-color);
+  padding: 5px 10px;
+  font-size: 26px;
+  height: 40px;
+}
+
+.row-chat {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.trash {
+  width: 24px;
+  height: 24px;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+}
+
+.message-text {
+  background-color: var(--red-white);
+  border-radius: 0 12px 12px;
+  color: var(--text-color);
+  font-size: 14px;
+  line-height: 15px;
+  max-width: 70%;
+  padding: 10px 20px;
+  white-space: pre-line;
+  width: fit-content;
+  word-break: break-all;
+}
+
+.my-message-text {
+  align-self: end;
+  display: flex;
+  justify-content: flex-end;
 }
