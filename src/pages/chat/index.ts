@@ -4,7 +4,7 @@ import { Input } from "../../components/Input";
 import { Link } from "../../components/Link";
 import Block from "../../services/Block";
 import userController from "../../store/UserController";
-import { connect } from "../../services/connecct";
+import { connect } from "../../services/connect";
 import { isEqual } from "../../services/isEqual";
 import { router } from "../../services/Router";
 import { ROUTES } from "../../services/routersList";
@@ -60,7 +60,7 @@ export class Chat extends Block {
       });
   }
   override componentDidMount(): void {
-    console.log(chatController.getChats());
+    chatController.getChats();
   }
   protected override componentDidUpdate(
     oldProps: Record<string, any> | null | undefined,
@@ -85,6 +85,9 @@ export class Chat extends Block {
               onClick: () => {
                 store.set("currentChat", chat);
                 chatController.getToken(chat.id);
+                this.setProps({
+                  chatTitle: newProps.currentChat.title,
+                });
               },
             })
         ),
@@ -164,7 +167,7 @@ export class Chat extends Block {
           onClick: (e: Event) => {
             e.preventDefault();
             const data = getForm<{ message: string }>("messages-form");
-            if (data) {
+            if (data.message) {
               msgController.sendMessage(data.message as string);
             }
           },
@@ -194,7 +197,7 @@ export class Chat extends Block {
                                 {{{ChatItems}}}
                             </div>
                             <div class="chat-container">
-                                <div class="chat-header" id="chatHeader">Выберите чат</div>
+                                <div class="chat-header" id="chatHeader">{{chatTitle}}</div>
                                 <div class="chat-header row" > 
                                   <form id="delete-user">
                                     <div >

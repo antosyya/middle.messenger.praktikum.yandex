@@ -10,10 +10,9 @@ export function connect<T extends object>(
     return class extends Component {
       constructor(props: BlockProps) {
         // сохраняем начальное состояние
+
+        super({ ...props });
         let state = mapStateToProps(store.getState());
-
-        super({ ...props, ...state });
-
         // подписываемся на событие
         store.on(StoreEvents.Updated, () => {
           // при обновлении получаем новое состояние

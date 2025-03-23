@@ -17,7 +17,7 @@ export default class App {
 
   async render(): Promise<void> {
     routes.map((item: IRoute) => router.use(item.path, new item.component()));
-    router.start();
     await authController.getUser();
+    router.start();
   }
 }

@@ -146,7 +146,15 @@ export default class Block {
 
     Object.assign(this.props, nextProps);
   };
+  // public setProps = (nextProps: BlockProps): void => {
+  //   if (!nextProps) {
+  //     return;
+  //   }
 
+  //   const oldProps = { ...this.props }; // Создаём копию перед изменением
+  //   this.props = { ...this.props, ...nextProps }; // Создаём новый объект вместо мутации
+  //   this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, this.props);
+  // };
   public setLists = (nextList: Record<string, unknown[]>): void => {
     if (!nextList) {
       return;

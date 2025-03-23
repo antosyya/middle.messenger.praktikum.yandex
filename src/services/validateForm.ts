@@ -53,10 +53,11 @@ export function getForm<T>(nameForm: string): { [K in keyof T]?: T[K] } {
     const inputs = form.querySelectorAll("input");
     inputs?.forEach((input) => {
       const inputElement = input as HTMLInputElement;
+
       validateInput(inputElement);
       formData = { ...formData, [inputElement.name]: inputElement.value };
     });
-    console.log(formData);
+    console.log("vvv", formData);
   }
   return formData;
 }

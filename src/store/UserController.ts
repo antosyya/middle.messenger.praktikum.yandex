@@ -1,6 +1,14 @@
 import userApi from "../api/user/UserApi";
+import { BASE_URL } from "../constants";
 import { IProfile, User, UserPassword } from "../types/User";
 import store from "./store";
+// export const getAvatar = (path: string | undefined): string => {
+//   if (path) {
+//     return `${BASE_URL}/resources${path}`;
+//   } else {
+//     return "/images/profile.png";
+//   }
+// };
 class UserController {
   async changeProfile(data: IProfile) {
     try {
@@ -19,9 +27,11 @@ class UserController {
       const formData = new FormData();
       formData.append("avatar", file);
       const responce = await userApi.changeAvatar(formData);
+      const user = JSON.parse(responce.response);
       if (responce.status === 200) {
-        store.set("user", JSON.parse(responce.response));
-        return responce.response;
+        // store.set("user", JSON.parse(responce.response));
+        store.set("user", { ...user, avatar: user.avatar });
+        return user;
       } else if (responce.status !== 200) {
         throw new Error(responce.responseText);
       }
