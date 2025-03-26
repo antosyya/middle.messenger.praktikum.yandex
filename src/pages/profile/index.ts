@@ -31,6 +31,7 @@ class ProfilePage extends Block {
               ...store.getState().user,
               avatar: response.avatar,
             });
+
             this.setProps({
               user: { ...store.getState().user, avatar: response.avatar },
             });
@@ -67,7 +68,7 @@ class ProfilePage extends Block {
       this.setChildren({
         Avatar: new Avatar({
           avatar: newProps?.user?.avatar
-            ? `https://ya-praktikum.tech/api/v2/resources${userData.avatar}`
+            ? `https://ya-praktikum.tech/api/v2/resources${newProps?.user?.avatar}`
             : "/img/user.svg",
         }),
         InputName: new Input({
