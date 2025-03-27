@@ -1,16 +1,28 @@
 import Block from "../../services/Block";
-import { Header } from "../../components/Header";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { getForm, validateInput } from "../../services/validateForm";
+import authController from "../../store/AuthController";
+import { SignInRequest } from "../../types/Auth";
+import { Link } from "../../components/Link";
+import { ROUTES } from "../../services/routersList";
+import { router } from "../../services/Router";
+
 export class AuthPage extends Block {
   constructor() {
     super({
-      HeaderBlock: new Header(),
       Button: new Button({
         text: "Войти",
+        onClick: (e: Event) => {
+          e.preventDefault();
+          const data = getForm("login-form");
+          authController.singin(data as SignInRequest);
+        },
+      }),
+      Link: new Link({
+        text: "Нет профиля",
         onClick: () => {
-          getForm("login-form");
+          router.go(ROUTES.SIGNUP);
         },
       }),
       InputLogin: new Input({
@@ -36,10 +48,9 @@ export class AuthPage extends Block {
 
   override render(): string {
     return `<div class="container">
-            {{{HeaderBlock}}}
                 <main class="main">
                     <h1>Вход</h1>
-                    <from class="form" id="login-form">
+                    <form class="form" id="login-form">
                         <label for="login">Логин</label>
                         {{{InputLogin}}}
                         <span class="error"></span>
@@ -47,8 +58,8 @@ export class AuthPage extends Block {
                         {{{InputPassword}}}
                         <span class="error"></span>
                      {{{Button }}}
-                    </from>
-                    <a href="/register.html" >Нет профиля</a>
+                    </form>
+                   {{{Link}}}
                 </main>
                 </div>`;
   }

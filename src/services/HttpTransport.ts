@@ -17,8 +17,9 @@ export type OptionsWithoutMethod = Omit<Options, "method">;
 type HTTPMethod = (
   url: string,
   options?: OptionsWithoutMethod
-) => Promise<unknown>;
-type HTTPRequest = (url: string, options?: Options) => Promise<unknown>;
+) => Promise<XMLHttpRequest>;
+type HTTPRequest = (url: string, options?: Options) => Promise<XMLHttpRequest>;
+
 export function queryStringify(data: unknown) {
   if (typeof data !== "object") {
     throw new Error("Data must be object");
@@ -35,6 +36,10 @@ export function queryStringify(data: unknown) {
 }
 
 export default class HTTPTransport {
+  private baseURL: string;
+  constructor(baseURL: string) {
+    this.baseURL = baseURL;
+  }
   get: HTTPMethod = (url, options = {}) => {
     return this.request(url, { ...options, method: METHODS.GET });
   };
@@ -53,7 +58,7 @@ export default class HTTPTransport {
 
   request: HTTPRequest = (url: string, options = {}, timeout = 5000) => {
     const { headers = {}, method, data } = options;
-
+    const requestURl: string = this.baseURL + url;
     return new Promise(function (resolve, reject) {
       if (!method) {
         reject("No method");
@@ -63,8 +68,11 @@ export default class HTTPTransport {
       const xhr = new XMLHttpRequest();
       const isGet = method === METHODS.GET;
 
-      xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url);
-
+      xhr.open(
+        method,
+        isGet && !!data ? `${requestURl}${queryStringify(data)}` : requestURl
+      );
+      xhr.withCredentials = true;
       Object.keys(headers).forEach((key) => {
         xhr.setRequestHeader(key, headers[key]);
       });
@@ -81,8 +89,23 @@ export default class HTTPTransport {
 
       if (isGet || !data) {
         xhr.send();
+      } else if (
+        typeof data === "string" ||
+        data instanceof Document ||
+        data instanceof Blob ||
+        data instanceof ArrayBuffer ||
+        data instanceof FormData
+      ) {
+        xhr.send(data);
       } else {
-        xhr.send(data as Document | XMLHttpRequestBodyInit | null | undefined);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(
+          JSON.stringify(data) as
+            | Document
+            | XMLHttpRequestBodyInit
+            | null
+            | undefined
+        );
       }
     });
   };

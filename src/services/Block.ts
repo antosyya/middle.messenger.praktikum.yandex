@@ -146,7 +146,15 @@ export default class Block {
 
     Object.assign(this.props, nextProps);
   };
+  // public setProps = (nextProps: BlockProps): void => {
+  //   if (!nextProps) {
+  //     return;
+  //   }
 
+  //   const oldProps = { ...this.props }; // Создаём копию перед изменением
+  //   this.props = { ...this.props, ...nextProps }; // Создаём новый объект вместо мутации
+  //   this.eventBus.emit(Block.EVENTS.FLOW_CDU, oldProps, this.props);
+  // };
   public setLists = (nextList: Record<string, unknown[]>): void => {
     if (!nextList) {
       return;
@@ -158,6 +166,13 @@ export default class Block {
   get element(): HTMLElement | null {
     return this._element;
   }
+  public setChildren = (nextList: Record<string, Block | null>): void => {
+    if (!nextList) {
+      return;
+    }
+
+    Object.assign(this.children, nextList);
+  };
 
   private _render(): void {
     const propsAndStubs = { ...this.props };
@@ -236,5 +251,18 @@ export default class Block {
 
   private _createDocumentElement(tagName: string): HTMLTemplateElement {
     return document.createElement(tagName) as HTMLTemplateElement;
+  }
+  public show(): void {
+    const content = this.getContent();
+    if (content) {
+      content.style.display = "flex";
+    }
+  }
+
+  public hide(): void {
+    const content = this.getContent();
+    if (content) {
+      content.style.display = "none";
+    }
   }
 }

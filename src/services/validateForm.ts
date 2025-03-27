@@ -6,6 +6,7 @@ const rules: { [key: string]: RegExp } = {
   password: /^(?=.*[A-Z])(?=.*\d)[A-Za-z0-9]{8,40}$/,
   phone: /^\+?[0-9]{10,15}$/,
   message: /^.+$/,
+  title: /^.+$/,
 };
 
 const errorRules: { [key: string]: string } = {
@@ -21,6 +22,7 @@ const errorRules: { [key: string]: string } = {
     "от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра",
   phone: "от 10 до 15 символов, состоит из цифр, может начинается с плюса",
   message: "не должно быть пустым",
+  title: "не должно быть пустым",
 };
 
 export function validateInput(
@@ -31,26 +33,31 @@ export function validateInput(
 
   if (rule && !rule.test(input.value.trim())) {
     console.log(`Некорректное значение в поле ${input.name}`);
-    errorSpan.textContent = errorRules[input.name];
+    if (errorSpan) {
+      errorSpan.textContent = errorRules[input.name];
+    }
     return false;
   } else {
     console.log(input.value);
-    errorSpan.textContent = "";
+    if (errorSpan) {
+      errorSpan.textContent = "";
+    }
     return true;
   }
 }
 
-export function getForm(nameForm: string): { [key: string]: string } {
+export function getForm<T>(nameForm: string): { [K in keyof T]?: T[K] } {
   const form = document.getElementById(nameForm);
-  let formData: { [key: string]: string } = {};
+  let formData: { [K in keyof T]?: T[K] } = {};
   if (form) {
     const inputs = form.querySelectorAll("input");
     inputs?.forEach((input) => {
       const inputElement = input as HTMLInputElement;
+
       validateInput(inputElement);
       formData = { ...formData, [inputElement.name]: inputElement.value };
     });
-    console.log(formData);
+    console.log("vvv", formData);
   }
   return formData;
 }

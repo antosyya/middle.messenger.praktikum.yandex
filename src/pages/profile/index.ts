@@ -1,109 +1,181 @@
 import { Button } from "../../components/Button";
-import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import Block from "../../services/Block";
 import { getForm, validateInput } from "../../services/validateForm";
-
-// export { default as Profile } from "./profile.hbs?raw";
-export class Profile extends Block {
+import store from "../../store/store";
+import authController from "../../store/AuthController";
+import { connect } from "../../services/connect";
+import { isEqual } from "../../services/isEqual";
+import userController from "../../store/UserController";
+import { IProfile, UserPassword } from "../../types/User";
+import { Link } from "../../components/Link";
+import { ROUTES } from "../../services/routersList";
+import { router } from "../../services/Router";
+import { Avatar } from "../../components/Avatar";
+class ProfilePage extends Block {
   constructor() {
     super({
-      HeaderBlock: new Header(),
       InputAvatar: new Input({
         type: "file",
         id: "avatar",
         name: "avatar",
         placeholder: "фото",
         className: "avatar",
-      }),
-      InputName: new Input({
-        type: "text",
-        id: "name",
-        name: "first_name",
-        placeholder: "имя",
-        className: "input",
-        blur: (event: Event) => {
-          validateInput(event.target as HTMLInputElement);
+
+        change: async (event: Event) => {
+          if (event.target instanceof HTMLInputElement && event.target.files) {
+            const response = await userController.changeAvatar(
+              event.target.files[0]
+            );
+            store.set("user", {
+              ...store.getState().user,
+              avatar: response.avatar,
+            });
+
+            this.setProps({
+              user: { ...store.getState().user, avatar: response.avatar },
+            });
+          }
         },
       }),
-      InputSecondName: new Input({
-        type: "text",
-        id: "lastname",
-        name: "second_name",
-        placeholder: "фамилия",
-        className: "input",
-        blur: (event: Event) => {
-          validateInput(event.target as HTMLInputElement);
-        },
-      }),
-      InputLogin: new Input({
-        type: "text",
-        id: "login-register",
-        name: "login",
-        placeholder: "логин",
-        className: "input",
-        blur: (event: Event) => {
-          validateInput(event.target as HTMLInputElement);
-        },
-      }),
-      InputEmail: new Input({
-        type: "text",
-        id: "email",
-        name: "email",
-        placeholder: "email",
-        className: "input",
-        blur: (event: Event) => {
-          validateInput(event.target as HTMLInputElement);
-        },
-      }),
-      InputPhone: new Input({
-        type: "tel",
-        id: "phone",
-        name: "phone",
-        placeholder: "телефон",
-        className: "input",
-        blur: (event: Event) => {
-          validateInput(event.target as HTMLInputElement);
-        },
-      }),
-      InputOldPassword: new Input({
-        type: "password",
-        id: "old-password",
-        name: "oldPassword",
-        placeholder: "пароль",
-        className: "input",
-        blur: (event: Event) => {
-          validateInput(event.target as HTMLInputElement);
-        },
-      }),
-      InputNewPassword: new Input({
-        type: "password",
-        id: "new-password",
-        name: "newPassword",
-        placeholder: "пароль",
-        className: "input",
-        blur: (event: Event) => {
-          validateInput(event.target as HTMLInputElement);
-        },
-      }),
-      Button: new Button({
-        text: "Изменить",
+      OutButton: new Button({
+        text: "Выйти",
         onClick: () => {
-          getForm("profile-form");
+          authController.logout();
         },
       }),
-      // ButtonOut: new Button({ text: "Выйти" }),
+      Link: new Link({
+        text: "Чаты",
+        onClick: () => {
+          router.go(ROUTES.CHATS);
+        },
+      }),
     });
+  }
+  protected override componentDidMount(): void {
+    store.getState().user;
+  }
+  override componentDidUpdate(
+    oldProps: Record<string, any> | null | undefined,
+    newProps: Record<string, any> | null | undefined
+  ): boolean {
+    const oldUser = oldProps?.user;
+    const newUser = newProps?.user;
+    const isChangeData = !!newProps?.user && !isEqual(oldUser, newUser);
+
+    const userData = typeof newUser === "string" ? newUser : newUser;
+    if (isChangeData) {
+      this.setChildren({
+        Avatar: new Avatar({
+          avatar: newProps?.user?.avatar
+            ? `https://ya-praktikum.tech/api/v2/resources${newProps?.user?.avatar}`
+            : "/img/user.svg",
+        }),
+        InputName: new Input({
+          type: "text",
+          id: "name",
+          name: "first_name",
+          value: userData.first_name,
+          placeholder: "имя",
+          className: "input",
+          blur: (event: Event) => {
+            validateInput(event.target as HTMLInputElement);
+          },
+        }),
+        InputSecondName: new Input({
+          type: "text",
+          id: "lastname",
+          name: "second_name",
+          value: userData.second_name,
+          placeholder: "фамилия",
+          className: "input",
+          blur: (event: Event) => {
+            validateInput(event.target as HTMLInputElement);
+          },
+        }),
+        InputLogin: new Input({
+          type: "text",
+          id: "login-register",
+          name: "login",
+          value: userData?.login,
+          placeholder: "логин",
+          className: "input",
+          blur: (event: Event) => {
+            validateInput(event.target as HTMLInputElement);
+          },
+        }),
+        InputEmail: new Input({
+          type: "text",
+          id: "email",
+          name: "email",
+          value: userData?.email,
+          placeholder: "email",
+          className: "input",
+          blur: (event: Event) => {
+            validateInput(event.target as HTMLInputElement);
+          },
+        }),
+        InputPhone: new Input({
+          type: "tel",
+          id: "phone",
+          name: "phone",
+          value: userData?.phone,
+          placeholder: "телефон",
+          className: "input",
+          blur: (event: Event) => {
+            validateInput(event.target as HTMLInputElement);
+          },
+        }),
+        InputOldPassword: new Input({
+          type: "password",
+          id: "old-password",
+          name: "oldPassword",
+          placeholder: "пароль",
+          className: "input",
+          blur: (event: Event) => {
+            validateInput(event.target as HTMLInputElement);
+          },
+        }),
+        InputNewPassword: new Input({
+          type: "password",
+          id: "new-password",
+          name: "newPassword",
+          placeholder: "пароль",
+          className: "input",
+          blur: (event: Event) => {
+            validateInput(event.target as HTMLInputElement);
+          },
+        }),
+        Button: new Button({
+          text: "Изменить",
+          onClick: (e: Event) => {
+            e.preventDefault();
+            const data = getForm("profile-form");
+            userController.changeProfile(data as IProfile);
+          },
+        }),
+        ButtonPassword: new Button({
+          text: "Изменить пароль",
+          onClick: (e: Event) => {
+            e.preventDefault();
+            const data = getForm("profile-password-form");
+            userController.changePassword(data as UserPassword);
+          },
+        }),
+      });
+    }
+    return true;
   }
   protected render(): string {
     return `<div class="container">
-                    {{{HeaderBlock}}}
                     <main class="main">
                         <h1>Профиль</h1>
-                    
-                        <from class="form" id="profile-form">
-                            <div class="avatar-wrap"></div>
+                        <form class="form" id="profile-avatar-form">
+                        {{{Avatar}}}
                             {{{InputAvatar}}} 
+                        </form>
+                        <form class="form" id="profile-form">
+                           
                             <label for="first_name">Имя</label>
                             {{{InputName}}}    
                             <span class="error"></span>
@@ -119,15 +191,22 @@ export class Profile extends Block {
                             <label for="phone">Телефон</label>
                             {{{InputPhone}}}    
                             <span class="error"></span>
+                              
+                            {{{ Button }}} 
+                        </form>
+                        <form class="form" id="profile-password-form">
                             <label for="oldPassword">Старый пароль</label>
                             {{{InputOldPassword}}}  
-
                             <label for="newPassword">Новый пароль</label>
-                            {{{InputNewPassword}}}   
-                            {{{ Button }}}  
-                            <a class="btn-out" href="/login.html" >Выйти</a>
-                        </from>
+                            {{{InputNewPassword}}}  
+                            {{{ ButtonPassword }}} 
+                        </form>
+                         {{{ OutButton }}}  
+                          {{{Link}}}
                     </main>
                     </div>`;
   }
 }
+const Profile = connect((state) => ({ user: state.user }))(ProfilePage);
+
+export default Profile;

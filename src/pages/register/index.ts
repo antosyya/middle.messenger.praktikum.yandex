@@ -1,13 +1,21 @@
 import { Button } from "../../components/Button";
-import { Header } from "../../components/Header";
 import { Input } from "../../components/Input";
 import Block from "../../services/Block";
 import { getForm, validateInput } from "../../services/validateForm";
-
+import authController from "../../store/AuthController";
+import { SignUpRequest } from "../../types/Auth";
+export interface ISignUp {
+  first_name: string;
+  second_name: string;
+  login: string;
+  email: string;
+  password: string;
+  passwordTwo: string;
+  phone: string;
+}
 export class Register extends Block {
   constructor() {
     super({
-      HeaderBlock: new Header(),
       InputAvatar: new Input({
         type: "text",
         id: "login",
@@ -86,18 +94,29 @@ export class Register extends Block {
       }),
       Button: new Button({
         text: "Зарегистироваться",
-        onClick: () => {
-          getForm("register-form");
+        onClick: (e: Event) => {
+          e.preventDefault();
+          const data = getForm("register-form");
+          const { login, email, first_name, second_name, phone, password } =
+            data as SignUpRequest;
+          const params: SignUpRequest = {
+            login,
+            email,
+            first_name,
+            second_name,
+            phone,
+            password,
+          };
+          authController.signup(params);
         },
       }),
     });
   }
   protected render(): string {
     return `<div class="container">
-                {{{HeaderBlock}}}
                 <main class="main">
                     <h1>Вход</h1>
-                    <from class="form" id="register-form">
+                    <form class="form" id="register-form">
                         <label for="first_name">Имя</label>
                         {{{InputName}}}   
                         <span class="error"></span>
@@ -119,7 +138,7 @@ export class Register extends Block {
                         <label for="password-two">Повторите пароль</label>
                         {{{InputNewPassword}}}  
                         {{{ Button }}}  
-                    </from>
+                    </form>
                 </main>
                 </div>`;
   }
