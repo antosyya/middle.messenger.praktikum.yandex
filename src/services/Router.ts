@@ -1,5 +1,5 @@
 import Block from "./Block";
-import { Route } from "./Route";
+import { Route } from "./Route.ts";
 
 export class Router {
   private _rootQuery!: string;

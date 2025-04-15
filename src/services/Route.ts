@@ -1,5 +1,5 @@
 import Block from "./Block";
-import { isEqualString } from "./isEqualString";
+import { isEqualString } from "./isEqualString.ts";
 
 export class Route {
   private _block: Block | null = null;

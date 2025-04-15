@@ -1,4 +1,4 @@
-import EventBus, { EventCallback } from "./EventBus";
+import EventBus, { EventCallback } from "./EventBus.ts";
 import Handlebars from "handlebars";
 export type BlockEvent = (event: Event) => void;
 export interface BlockProps {
