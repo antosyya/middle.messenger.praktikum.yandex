@@ -1,5 +1,6 @@
 import EventBus, { EventCallback } from "./EventBus.ts";
 import Handlebars from "handlebars";
+import { v4 } from "uuid";
 export type BlockEvent = (event: Event) => void;
 export interface BlockProps {
   [key: string]: any;
@@ -14,7 +15,7 @@ export default class Block {
   };
 
   protected _element: HTMLElement | null = null;
-  protected _id: string = crypto.randomUUID();
+  protected _id: string = v4();
   protected eventBus: EventBus;
   protected props: BlockProps;
   protected children: Record<string, Block>;
