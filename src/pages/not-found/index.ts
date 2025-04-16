@@ -1,8 +1,8 @@
-import Block from "../../services/Block";
+import Block from '../../services/Block'
 
 export class NotFound extends Block {
   constructor() {
-    super();
+    super()
   }
   protected override render(): string {
     return `<div class="container">
@@ -10,6 +10,6 @@ export class NotFound extends Block {
                     <h1 class="big-text">404</h1>
                     <p>Такой страницы нет</p>
                 </main>
-            </div>`;
+            </div>`
   }
 }

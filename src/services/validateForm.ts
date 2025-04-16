@@ -6,58 +6,58 @@ const rules: { [key: string]: RegExp } = {
   password: /^(?=.*[A-Z])(?=.*\d)[A-Za-z0-9]{8,40}$/,
   phone: /^\+?[0-9]{10,15}$/,
   message: /^.+$/,
-  title: /^.+$/,
-};
+  title: /^.+$/
+}
 
 const errorRules: { [key: string]: string } = {
   first_name:
-    "латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов (допустим только дефис)",
+    'латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов (допустим только дефис)',
   second_name:
-    "латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов (допустим только дефис)",
+    'латиница или кириллица, первая буква должна быть заглавной, без пробелов и без цифр, нет спецсимволов (допустим только дефис)',
   login:
-    "от 3 до 20 символов, латиница, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов (допустимы дефис и нижнее подчёркивание)",
+    'от 3 до 20 символов, латиница, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов (допустимы дефис и нижнее подчёркивание)',
   email:
-    "латиница, может включать цифры и спецсимволы вроде дефиса и подчёркивания, обязательно должна быть «собака» (@) и точка после неё, но перед точкой обязательно должны быть буквы",
+    'латиница, может включать цифры и спецсимволы вроде дефиса и подчёркивания, обязательно должна быть «собака» (@) и точка после неё, но перед точкой обязательно должны быть буквы',
   password:
-    "от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра",
-  phone: "от 10 до 15 символов, состоит из цифр, может начинается с плюса",
-  message: "не должно быть пустым",
-  title: "не должно быть пустым",
-};
+    'от 8 до 40 символов, обязательно хотя бы одна заглавная буква и цифра',
+  phone: 'от 10 до 15 символов, состоит из цифр, может начинается с плюса',
+  message: 'не должно быть пустым',
+  title: 'не должно быть пустым'
+}
 
 export function validateInput(
   input: HTMLInputElement | HTMLTextAreaElement
 ): boolean {
-  const rule = rules[input.name];
-  const errorSpan = input.nextElementSibling as HTMLElement;
+  const rule = rules[input.name]
+  const errorSpan = input.nextElementSibling as HTMLElement
 
   if (rule && !rule.test(input.value.trim())) {
-    console.log(`Некорректное значение в поле ${input.name}`);
+    console.log(`Некорректное значение в поле ${input.name}`)
     if (errorSpan) {
-      errorSpan.textContent = errorRules[input.name];
+      errorSpan.textContent = errorRules[input.name]
     }
-    return false;
+    return false
   } else {
-    console.log(input.value);
+    console.log(input.value)
     if (errorSpan) {
-      errorSpan.textContent = "";
+      errorSpan.textContent = ''
     }
-    return true;
+    return true
   }
 }
 
 export function getForm<T>(nameForm: string): { [K in keyof T]?: T[K] } {
-  const form = document.getElementById(nameForm);
-  let formData: { [K in keyof T]?: T[K] } = {};
+  const form = document.getElementById(nameForm)
+  let formData: { [K in keyof T]?: T[K] } = {}
   if (form) {
-    const inputs = form.querySelectorAll("input");
-    inputs?.forEach((input) => {
-      const inputElement = input as HTMLInputElement;
+    const inputs = form.querySelectorAll('input')
+    inputs?.forEach(input => {
+      const inputElement = input as HTMLInputElement
 
-      validateInput(inputElement);
-      formData = { ...formData, [inputElement.name]: inputElement.value };
-    });
-    console.log("vvv", formData);
+      validateInput(inputElement)
+      formData = { ...formData, [inputElement.name]: inputElement.value }
+    })
+    console.log('vvv', formData)
   }
-  return formData;
+  return formData
 }
