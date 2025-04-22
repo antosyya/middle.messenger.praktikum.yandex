@@ -33,6 +33,8 @@
 
 запуск проекта в режиме разработки `npm run dev`
 
+запуск тестов `npm test`
+
 проверка css - npm run lint:css
 
 исправление ошибки форматирования CSS -npm run format:css

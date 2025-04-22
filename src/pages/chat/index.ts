@@ -1,79 +1,79 @@
-import { Button } from "../../components/Button";
-import { ChatItem } from "../../components/ChatItem";
-import { Input } from "../../components/Input";
-import { Link } from "../../components/Link";
-import Block from "../../services/Block";
-import userController from "../../store/UserController";
-import { connect } from "../../services/connect";
-import { isEqual } from "../../services/isEqual";
-import { router } from "../../services/Router";
-import { ROUTES } from "../../services/routersList";
-import { getForm, validateInput } from "../../services/validateForm";
-import chatController from "../../store/ChatController";
-import msgController from "../../store/MsgController";
-import store, { StoreEvents } from "../../store/store";
-import { IChat } from "../../types/Chats";
-import { MsgItem } from "../../components/MsgItem";
-import { Message } from "../../types/Message";
+import { Button } from '../../components/Button'
+import { ChatItem } from '../../components/ChatItem'
+import { Input } from '../../components/Input'
+import { Link } from '../../components/Link'
+import Block from '../../services/Block'
+import userController from '../../store/UserController'
+import { connect } from '../../services/connect'
+import { isEqual } from '../../services/isEqual'
+import { router } from '../../services/Router'
+import { ROUTES } from '../../services/routersList'
+import { getForm, validateInput } from '../../services/validateForm'
+import chatController from '../../store/ChatController'
+import msgController from '../../store/MsgController'
+import store, { StoreEvents } from '../../store/store'
+import { IChat } from '../../types/Chats'
+import { MsgItem } from '../../components/MsgItem'
+import { Message } from '../../types/Message'
 export class Chat extends Block {
   constructor() {
     store.on(StoreEvents.Updated, () => {
       // вызываем обновление компонента, передав данные из хранилища
-      this.setProps(store.getState());
+      this.setProps(store.getState())
     }),
       super({
         showCreateChatForm: false,
 
         ButtonOpen: new Button({
-          text: "+",
-          className: "btn-plus",
+          text: '+',
+          className: 'btn-plus',
           onClick: (e: Event) => {
-            e.preventDefault();
-            this.setProps({ showCreateChatForm: true });
-          },
+            e.preventDefault()
+            this.setProps({ showCreateChatForm: true })
+          }
         }),
         ButtonCreateChat: new Button({
-          text: "Создать чат",
+          text: 'Создать чат',
           onClick: (e: Event) => {
-            e.preventDefault();
-            const data = getForm("create-chat-form");
-            chatController.createChat(data as string);
-            this.setProps({ showCreateChatForm: false });
-          },
+            e.preventDefault()
+            const data = getForm('create-chat-form')
+            chatController.createChat(data as string)
+            this.setProps({ showCreateChatForm: false })
+          }
         }),
 
         InputNameChat: new Input({
-          type: "text",
-          id: "title",
-          name: "title",
-          placeholder: "Название чата...",
+          type: 'text',
+          id: 'title',
+          name: 'title',
+          placeholder: 'Название чата...',
           blur: (event: Event) => {
-            validateInput(event.target as HTMLInputElement);
-          },
+            validateInput(event.target as HTMLInputElement)
+          }
         }),
         Link: new Link({
-          text: "Профиль",
+          text: 'Профиль',
           onClick: () => {
-            router.go(ROUTES.PROFILE);
-          },
-        }),
-      });
+            router.go(ROUTES.PROFILE)
+          }
+        })
+      })
   }
   override componentDidMount(): void {
-    chatController.getChats();
+    chatController.getChats()
   }
   protected override componentDidUpdate(
     oldProps: Record<string, any> | null | undefined,
     newProps: Record<string, any> | null | undefined
   ): boolean {
-    const curentUser = store.getState().user;
+    const curentUser = store.getState().user
     const isChangeChats =
-      !!newProps?.chats && !isEqual(oldProps?.chats, newProps?.chats);
+      !!newProps?.chats && !isEqual(oldProps?.chats, newProps?.chats)
     const isChangeCurrentChat =
       !!newProps?.currentChat &&
-      !isEqual(oldProps?.currentChat, newProps?.currentChat);
+      !isEqual(oldProps?.currentChat, newProps?.currentChat)
     const isChangeMessage =
-      !!newProps?.message && !isEqual(oldProps?.message, newProps?.message);
+      !!newProps?.message && !isEqual(oldProps?.message, newProps?.message)
     if (isChangeChats && newProps.chats.length > 0) {
       this.setLists({
         ChatItems: newProps?.chats?.map(
@@ -81,17 +81,17 @@ export class Chat extends Block {
             new ChatItem({
               id: chat.id,
               title: chat.title,
-              avatar: chat.avatar ? chat.avatar : "/img/user.svg",
+              avatar: chat.avatar ? chat.avatar : '/img/user.svg',
               onClick: () => {
-                store.set("currentChat", chat);
-                chatController.getToken(chat.id);
+                store.set('currentChat', chat)
+                chatController.getToken(chat.id)
                 this.setProps({
-                  chatTitle: newProps.currentChat.title,
-                });
-              },
+                  chatTitle: newProps.currentChat.title
+                })
+              }
             })
-        ),
-      });
+        )
+      })
     }
     if (isChangeMessage && newProps.message.length > 0) {
       this.setLists({
@@ -99,82 +99,82 @@ export class Chat extends Block {
           (msg: Message) =>
             new MsgItem({
               content: msg.content,
-              myMsg: msg.user_id === curentUser?.id,
+              myMsg: msg.user_id === curentUser?.id
             })
-        ),
-      });
+        )
+      })
     }
     if (isChangeCurrentChat) {
       this.setChildren({
         InputDeleteUser: new Input({
-          id: "delete-login",
-          name: "login",
-          type: "login",
-          placeholder: "Логин пользователя...",
+          id: 'delete-login',
+          name: 'login',
+          type: 'login',
+          placeholder: 'Логин пользователя...',
           blur: (event: Event) => {
-            validateInput(event.target as HTMLInputElement);
-          },
+            validateInput(event.target as HTMLInputElement)
+          }
         }),
         InputAddUser: new Input({
-          id: "add-login",
-          name: "login",
-          type: "login",
-          placeholder: "Логин пользователя...",
+          id: 'add-login',
+          name: 'login',
+          type: 'login',
+          placeholder: 'Логин пользователя...',
           blur: (event: Event) => {
-            validateInput(event.target as HTMLInputElement);
-          },
+            validateInput(event.target as HTMLInputElement)
+          }
         }),
         ButtonDeleteUser: new Button({
-          text: "Удалить пользователя",
+          text: 'Удалить пользователя',
           onClick: async (e: Event) => {
-            e.preventDefault();
-            const data = getForm("delete-user");
-            const users = await userController.searchUser(data as string);
-            const chatId = store.getState().currentChat?.id;
+            e.preventDefault()
+            const data = getForm('delete-user')
+            const users = await userController.searchUser(data as string)
+            const chatId = store.getState().currentChat?.id
             if (users && users?.length > 0 && chatId) {
               chatController.deleteUsers({
                 chatId: chatId,
-                users: [users[0].id],
-              });
+                users: [users[0].id]
+              })
             }
 
-            this.setProps({ showCreateChatForm: false });
-          },
+            this.setProps({ showCreateChatForm: false })
+          }
         }),
         ButtonAddUser: new Button({
-          text: "Добавить пользователя",
+          text: 'Добавить пользователя',
           onClick: async (e: Event) => {
-            e.preventDefault();
-            const data = getForm("add-user");
-            const users = await userController.searchUser(data as string);
-            const chatId = store.getState().currentChat?.id;
+            e.preventDefault()
+            const data = getForm('add-user')
+            const users = await userController.searchUser(data as string)
+            const chatId = store.getState().currentChat?.id
             if (users && users?.length > 0 && chatId) {
-              chatController.addUsers({ chatId: chatId, users: [users[0].id] });
+              chatController.addUsers({ chatId: chatId, users: [users[0].id] })
             }
-          },
+          }
         }),
         InputMessage: new Input({
-          type: "text",
-          id: "message",
-          name: "message",
-          placeholder: "Введите сообщение...",
+          type: 'text',
+          id: 'message',
+          name: 'message',
+          placeholder: 'Введите сообщение...',
           blur: (event: Event) => {
-            validateInput(event.target as HTMLInputElement);
-          },
+            validateInput(event.target as HTMLInputElement)
+          }
         }),
         Button: new Button({
-          text: "Отправить",
+          text: 'Отправить',
           onClick: (e: Event) => {
-            e.preventDefault();
-            const data = getForm<{ message: string }>("messages-form");
+            e.preventDefault()
+            const data = getForm<{ message: string }>('messages-form')
             if (data.message) {
-              msgController.sendMessage(data.message as string);
+              msgController.sendMessage(data.message as string)
             }
-          },
-        }),
-      });
+          }
+        })
+      })
     }
-    return true;
+    return true
   }
   override render(): string {
     return `<div class="container center">
@@ -225,9 +225,9 @@ export class Chat extends Block {
                             </div>
                         </div>
                     </main>
-                    </div>`;
+                    </div>`
   }
 }
-const ChatPage = connect((state) => ({ user: state.user }))(Chat);
+const ChatPage = connect(state => ({ user: state.user }))(Chat)
 
-export default ChatPage;
+export default ChatPage

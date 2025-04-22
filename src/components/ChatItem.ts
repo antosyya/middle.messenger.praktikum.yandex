@@ -1,18 +1,18 @@
-import Block from "../services/Block";
+import Block from '../services/Block'
 interface Props {
-  id: number;
-  title: string;
-  avatar?: string;
-  onClick: () => void;
+  id: number
+  title: string
+  avatar?: string
+  onClick: () => void
 }
 export class ChatItem extends Block {
   constructor(props: Props) {
     super({
       ...props,
       events: {
-        click: props.onClick,
-      },
-    });
+        click: props.onClick
+      }
+    })
   }
   protected override render(): string {
     return `<div class="chat-list-item" >
@@ -20,6 +20,6 @@ export class ChatItem extends Block {
                 <div class="avatar-wrap avatar-wrap-chat"><img src={{avatar}} alt="Avatar"></div>
                 {{title}}
                 </div>
-            </div>`;
+            </div>`
   }
 }
